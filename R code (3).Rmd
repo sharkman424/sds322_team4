@@ -38,24 +38,59 @@ library("gridExtra")
 
 ```{r}
 
-plot1 <- ggplot(data, aes(x=as.factor(X1), y=Y1)) + geom_violin(trim=FALSE, color = "red") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X1", y = "Y1")
-plot2 <- ggplot(data, aes(x=as.factor(X2), y=Y1)) + geom_violin(trim=FALSE, color = "orange") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X2", y = "Y1")
-plot3 <- ggplot(data, aes(x=as.factor(X3), y=Y1)) + geom_violin(trim=FALSE, color = "yellow") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X3", y = "Y1")
-plot4 <- ggplot(data, aes(x=as.factor(X4), y=Y1)) + geom_violin(trim=FALSE, color = "green") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X4", y = "Y1")
-plot5 <- ggplot(data, aes(x=as.factor(X5), y=Y1)) + geom_violin(trim=FALSE, color = "blue") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X5", y = "Y1")
-plot6 <- ggplot(data, aes(x=as.factor(X6), y=Y1)) + geom_violin(trim=FALSE, color = "pink") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X6", y = "Y1")
-plot7 <- ggplot(data, aes(x=as.factor(X7), y=Y1)) + geom_violin(trim=FALSE, color = "violet") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X7", y = "Y1")
-plot8 <- ggplot(data, aes(x=as.factor(X8), y=Y1)) + geom_violin(trim=FALSE, color = "black") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X8", y = "Y1")
-grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, ncol=4)
-plot11 <- ggplot(data, aes(x=as.factor(X1), y=Y2)) + geom_violin(trim=FALSE, color = "red") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X1", y = "Y2")
-plot22 <- ggplot(data, aes(x=as.factor(X2), y=Y2)) + geom_violin(trim=FALSE, color = "orange") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X2", y = "Y2")
-plot33 <- ggplot(data, aes(x=as.factor(X3), y=Y2)) + geom_violin(trim=FALSE, color = "yellow") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X3", y = "Y2")
-plot44 <- ggplot(data, aes(x=as.factor(X4), y=Y2)) + geom_violin(trim=FALSE, color = "green") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X4", y = "Y2")
-plot55 <- ggplot(data, aes(x=as.factor(X5), y=Y2)) + geom_violin(trim=FALSE, color = "blue") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X5", y = "Y2")
-plot66 <- ggplot(data, aes(x=as.factor(X6), y=Y2)) + geom_violin(trim=FALSE, color = "pink") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X6", y = "Y2")
-plot77 <- ggplot(data, aes(x=as.factor(X7), y=Y2)) + geom_violin(trim=FALSE, color = "violet") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X7", y = "Y2")
-plot88 <- ggplot(data, aes(x=as.factor(X8), y=Y2)) + geom_violin(trim=FALSE, color = "black") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X8", y = "Y2")
-grid.arrange(plot11, plot22, plot33, plot44, plot55, plot66, plot77, plot88, ncol=4)
+plot1 <- ggplot(data, aes(x=as.factor(X1), y=Y1)) + geom_violin(trim=FALSE, color = "red") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X1", y = "Y1")
+plot2 <- ggplot(data, aes(x=as.factor(X2), y=Y1)) + geom_violin(trim=FALSE, color = "orange") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X2", y = "Y1")
+plot3 <- ggplot(data, aes(x=as.factor(X3), y=Y1)) + geom_violin(trim=FALSE, color = "yellow") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X3", y = "Y1")
+plot4 <- ggplot(data, aes(x=as.factor(X4), y=Y1)) + geom_violin(trim=FALSE, color = "green") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X4", y = "Y1")
+plot5 <- ggplot(data, aes(x=as.factor(X5), y=Y1)) + geom_violin(trim=FALSE, color = "blue") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X5", y = "Y1")
+plot6 <- ggplot(data, aes(x=as.factor(X6), y=Y1)) + geom_violin(trim=FALSE, color = "pink") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X6", y = "Y1")
+plot7 <- ggplot(data, aes(x=as.factor(X7), y=Y1)) + geom_violin(trim=FALSE, color = "violet") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X7", y = "Y1")
+plot8 <- ggplot(data, aes(x=as.factor(X8), y=Y1)) + geom_violin(trim=FALSE, color = "black") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X8", y = "Y1")
+
+grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, ncol=3)
+
+plot11 <- ggplot(data, aes(x=as.factor(X1), y=Y2)) + geom_violin(trim=FALSE, color = "red") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X1", y = "Y2")
+plot22 <- ggplot(data, aes(x=as.factor(X2), y=Y2)) + geom_violin(trim=FALSE, color = "orange") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X2", y = "Y2")
+plot33 <- ggplot(data, aes(x=as.factor(X3), y=Y2)) + geom_violin(trim=FALSE, color = "yellow") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X3", y = "Y2")
+plot44 <- ggplot(data, aes(x=as.factor(X4), y=Y2)) + geom_violin(trim=FALSE, color = "green") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X4", y = "Y2")
+plot55 <- ggplot(data, aes(x=as.factor(X5), y=Y2)) + geom_violin(trim=FALSE, color = "blue") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X5", y = "Y2")
+plot66 <- ggplot(data, aes(x=as.factor(X6), y=Y2)) + geom_violin(trim=FALSE, color = "pink") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X6", y = "Y2")
+plot77 <- ggplot(data, aes(x=as.factor(X7), y=Y2)) + geom_violin(trim=FALSE, color = "violet") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X7", y = "Y2")
+plot88 <- ggplot(data, aes(x=as.factor(X8), y=Y2)) + geom_violin(trim=FALSE, color = "black") + 
+     geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+     labs(x = "X8", y = "Y2")
+
+grid.arrange(plot11, plot22, plot33, plot44, plot55, plot66, plot77, plot88, ncol=3)
 
 ```
 ```{r}
