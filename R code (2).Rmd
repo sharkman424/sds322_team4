@@ -1,0 +1,205 @@
+---
+title: "Untitled"
+author: "Sofia"
+date: "11/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importing file and libraries
+
+First we will read the file, import the tidyverse library to manipulate the dataset and reticulate to be able to play with python as well. First we are going to drop the columns X and X.1
+
+```{r}
+data <- read.csv("ENB2012_data (2).csv")
+data <- data %>% mutate(X6 = as.factor(X6)) %>% mutate(X8 = as.factor(X8))
+
+library(tidyverse) 
+library(reticulate) 
+
+use_python("/usr/bin/python3", required = F)
+
+# do not touch these settings
+Sys.which("python")
+Sys.getenv("DISPLAY") 
+
+matplotlib <- import("matplotlib", convert = TRUE)
+matplotlib$use("Agg")
+
+data %>% select(-X, -X.1) %>% na.omit() -> data
+
+install.packages("gridExtra")
+library("gridExtra")
+
+```
+
+```{r}
+
+plot1 <- ggplot(data, aes(x=as.factor(X1), y=Y1)) + geom_violin(trim=FALSE, color = "red") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X1", y = "Y1")
+plot2 <- ggplot(data, aes(x=as.factor(X2), y=Y1)) + geom_violin(trim=FALSE, color = "orange") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X2", y = "Y1")
+plot3 <- ggplot(data, aes(x=as.factor(X3), y=Y1)) + geom_violin(trim=FALSE, color = "yellow") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X3", y = "Y1")
+plot4 <- ggplot(data, aes(x=as.factor(X4), y=Y1)) + geom_violin(trim=FALSE, color = "green") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X4", y = "Y1")
+plot5 <- ggplot(data, aes(x=as.factor(X5), y=Y1)) + geom_violin(trim=FALSE, color = "blue") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X5", y = "Y1")
+plot6 <- ggplot(data, aes(x=as.factor(X6), y=Y1)) + geom_violin(trim=FALSE, color = "pink") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X6", y = "Y1")
+plot7 <- ggplot(data, aes(x=as.factor(X7), y=Y1)) + geom_violin(trim=FALSE, color = "violet") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X7", y = "Y1")
+plot8 <- ggplot(data, aes(x=as.factor(X8), y=Y1)) + geom_violin(trim=FALSE, color = "black") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X8", y = "Y1")
+grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, ncol=4)
+plot11 <- ggplot(data, aes(x=as.factor(X1), y=Y2)) + geom_violin(trim=FALSE, color = "red") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X1", y = "Y2")
+plot22 <- ggplot(data, aes(x=as.factor(X2), y=Y2)) + geom_violin(trim=FALSE, color = "orange") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X2", y = "Y2")
+plot33 <- ggplot(data, aes(x=as.factor(X3), y=Y2)) + geom_violin(trim=FALSE, color = "yellow") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X3", y = "Y2")
+plot44 <- ggplot(data, aes(x=as.factor(X4), y=Y2)) + geom_violin(trim=FALSE, color = "green") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X4", y = "Y2")
+plot55 <- ggplot(data, aes(x=as.factor(X5), y=Y2)) + geom_violin(trim=FALSE, color = "blue") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X5", y = "Y2")
+plot66 <- ggplot(data, aes(x=as.factor(X6), y=Y2)) + geom_violin(trim=FALSE, color = "pink") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X6", y = "Y2")
+plot77 <- ggplot(data, aes(x=as.factor(X7), y=Y2)) + geom_violin(trim=FALSE, color = "violet") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X7", y = "Y2")
+plot88 <- ggplot(data, aes(x=as.factor(X8), y=Y2)) + geom_violin(trim=FALSE, color = "black") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "X8", y = "Y2")
+grid.arrange(plot11, plot22, plot33, plot44, plot55, plot66, plot77, plot88, ncol=4)
+
+```
+
+
+```{r}
+data %>% select (X1, X2, X3, X4, X5, X6, X7, X8) -> X
+data %>% select (Y1) -> Y1
+data %>% select (Y2) -> Y2
+
+```
+
+
+## Modelling
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+from sklearn.model_selection import train_test_split
+
+#First we will do it to predict the y1 response variable
+X_train, X_test, y1_train, y1_test = train_test_split(r.X, r.Y1, random_state=0)
+reg1 = linear_model.LinearRegression()
+reg1.fit(X_train, y1_train)
+y_pred1_reg = reg1.predict(X_test)
+mse_1_reg = np.mean((y1_test - y_pred1_reg)**2)
+
+figure = plt.figure(figsize=(15, 11))
+
+#subplot for r1 regression
+ax = plt.subplot(1,2,1)
+plt.title('Linear regression Y1')
+plt.xlabel('Actual values Y1', size=12)
+plt.ylabel('Predicted Y1', size=12)
+plt.plot(y1_test,y_pred1_reg , '.b')
+
+
+#Now we will do it to predict the y2 response variable
+
+X_train, X_test, y2_train, y2_test = train_test_split(r.X, r.Y2, random_state=0)
+
+reg2 = linear_model.LinearRegression()
+reg2.fit(X_train, y2_train)
+y_pred2_reg = reg2.predict(X_test)
+mse_2_reg = np.mean((y2_test - y_pred2_reg)**2)
+
+
+#subplot for r2 regression
+ax = plt.subplot(1,2,2)
+plt.title('Linear regression Y2')
+plt.xlabel('Actual values Y2', size=12)
+plt.ylabel('Predicted Y2', size=12)
+plt.plot(y2_test,y_pred2_reg , '.b', color = 'red')
+
+
+
+```
+
+Do it with SVM, knn, decision tree and random forests and say which one is better
+
+```{python}
+from sklearn.svm import SVR
+figure2 = plt.figure(figsize=(15, 11))
+
+X_train, X_test, y1_train, y1_test = train_test_split(r.X, r.Y1, random_state=0)
+
+SVR1 = SVR()
+SVR1.fit(X_train, y1_train) 
+y_pred1_svm = SVR1.predict(X_test)
+
+y_pred1_svm = np.reshape(y_pred1_svm, (192,1))
+
+mse_1_svr = np.mean((y1_test - y_pred1_svm)**2)
+
+#subplot for r1 regression
+ax = plt.subplot(1,2,1)
+plt.title('SVR Y1')
+plt.xlabel('Actual values Y1', size=12)
+plt.ylabel('Predicted Y1', size=12)
+plt.plot(y1_test, y_pred1_svm  , '.b')
+
+
+X_train, X_test, y2_train, y2_test = train_test_split(r.X, r.Y2, random_state=0)
+
+SVR2 = SVR()
+SVR2.fit(X_train, y2_train) 
+y_pred2_svm = SVR2.predict(X_test)
+
+y_pred2_svm = np.reshape(y_pred2_svm, (192,1))
+
+mse_2_svr = np.mean((y2_test - y_pred2_svm)**2)
+
+#subplot for r2 regression
+ax = plt.subplot(1,2,2)
+plt.title('SVR Y2')
+plt.xlabel('Actual values Y2', size=12)
+plt.ylabel('Predicted Y2', size=12)
+plt.plot(y2_test,y_pred2_svm , '.b', color = 'red')
+
+```
+```{python}
+from sklearn.ensemble import RandomForestRegressor
+figure3 = plt.figure(figsize=(15, 11))
+
+X_train, X_test, y1_train, y1_test = train_test_split(r.X, r.Y1, random_state=0)
+
+randomforest = RandomForestRegressor()
+randomforest.fit(X_train, y1_train.values.ravel())
+y_pred1_randomf = randomforest.predict(X_test)
+
+y_pred1_randomf = np.reshape(y_pred1_randomf, (192,1))
+
+mse_1_randomf = np.mean((y1_test - y_pred1_randomf)**2)
+
+ax = plt.subplot(1,2,1)
+plt.title('Random forest Y1')
+plt.xlabel('Actual values Y1', size=12)
+plt.ylabel('Predicted Y1', size=12)
+plt.plot(y1_test, y_pred1_randomf , '.b')
+
+#Y2
+
+X_train, X_test, y2_train, y2_test = train_test_split(r.X, r.Y2, random_state=0)
+
+randomforest = RandomForestRegressor()
+randomforest.fit(X_train, y2_train.values.ravel())
+y_pred2_randomf = randomforest.predict(X_test)
+
+y_pred2_randomf = np.reshape(y_pred2_randomf, (192,1))
+
+mse_2_randomf = np.mean((y2_test - y_pred2_randomf)**2)
+
+ax = plt.subplot(1,2,2)
+plt.title('Random forest Y1')
+plt.xlabel('Actual values Y1', size=12)
+plt.ylabel('Predicted Y1', size=12)
+plt.plot(y2_test, y_pred2_randomf , '.b', color = 'red')
+
+
+
+
+```
+
+
+
+
+
