@@ -1,0 +1,130 @@
+---
+title: "Untitled"
+author: "Sofia"
+date: "11/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importing file and libraries
+
+First we will read the file, import the tidyverse library to manipulate the dataset and reticulate to be able to play with python as well. First we are going to drop the columns X and X.1
+
+```{r}
+
+library(tidyverse) 
+library(reticulate) 
+
+
+install.packages("gridExtra")
+library("gridExtra")
+
+```
+
+
+```{r}
+
+#First we read the file
+
+data <- read.csv("ENB2012_data (2).csv")
+
+#When the file is loaded, two empty columns appear, which we now drop from the dataset. Then we make sure that there are no missing values in the data.
+
+data %>% select(-X, -X.1) %>% na.omit() -> data
+
+#Here we are re-labeling the column names to make them more intuitive
+
+data <- data %>% select(relative_compactness = 'X1', surface_area = 'X2', wall_area = 'X3', roof_area = 'X4', overall_height = 'X5', orientation = 'X6', glazing_area = 'X7', glazing_area_distribution = 'X8', heating_load = 'Y1', cooling_load = 'Y2')
+
+#Here we are converting glazing are distribution (which is categorical with no natural order) into several dummy variables
+
+data1 <- data %>% mutate(glazing_area_distribution1 = ifelse(glazing_area_distribution == 1,1,0), glazing_area_distribution2 = ifelse(glazing_area_distribution == 2,1,0),glazing_area_distribution3 = ifelse(glazing_area_distribution == 3,1,0), glazing_area_distribution4 = ifelse(glazing_area_distribution == 4,1,0), glazing_area_distribution5 = ifelse(glazing_area_distribution == 5,1,0))
+
+#We do the same for orientation, which is also a categorical variable
+
+data1 <- data1 %>% mutate(orientation2 = ifelse(orientation == 2,1,0), orientation3 = ifelse(orientation == 3,1,0), orientation4 = ifelse(orientation == 4,1,0), orientation5 = ifelse(orientation == 5,1,0))
+
+#Finally, we drop the original orientation and glazing area distribution variables
+
+data1 <- data1 %>% select(-orientation, -glazing_area_distribution)
+
+#We decided not to scale the data since we will be using regression models that don't rely on distances, therefore normalizing it will add no value
+#The data was already tidy since the data was obtained from a simulation using Ecotect software, where the user is able to estimate a building's energy consumption by varying aspects of its environment.
+```
+
+
+```{r}
+
+plot1 <- ggplot(data, aes(x=as.factor(relative_compactness), y=heating_load)) + geom_violin(trim=FALSE, color = "red") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "relative compactness", y = "heating load")
+plot2 <- ggplot(data, aes(x=as.factor(surface_area), y=heating_load)) + geom_violin(trim=FALSE, color = "orange") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "surface area", y = "heating load")
+plot3 <- ggplot(data, aes(x=as.factor(wall_area ), y=heating_load)) + geom_violin(trim=FALSE, color = "yellow") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "wall area ", y = "heating load")
+plot4 <- ggplot(data, aes(x=as.factor(roof_area), y=heating_load)) + geom_violin(trim=FALSE, color = "green") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "roof area", y = "heating load")
+plot5 <- ggplot(data, aes(x=as.factor(overall_height), y=heating_load)) + geom_violin(trim=FALSE, color = "blue") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "overall height", y = "heating load")
+plot6 <- ggplot(data, aes(x=as.factor(orientation), y=heating_load)) + geom_violin(trim=FALSE, color = "pink") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "orientation", y = "heating load")
+plot7 <- ggplot(data, aes(x=as.factor(glazing_area), y=heating_load)) + geom_violin(trim=FALSE, color = "violet") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "glazing area", y = "heating load")
+plot8 <- ggplot(data, aes(x=as.factor(glazing_area_distribution), y=heating_load)) + geom_violin(trim=FALSE, color = "black") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "glazing area distribution", y = "heating load")
+
+grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, plot7, plot8, ncol=4)
+
+plot11 <- ggplot(data, aes(x=as.factor(relative_compactness), y=cooling_load)) + geom_violin(trim=FALSE, color = "red") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "relative compactness", y = "cooling load")
+plot22 <- ggplot(data, aes(x=as.factor(surface_area), y=cooling_load)) + geom_violin(trim=FALSE, color = "orange") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "surface area", y = "cooling load")
+plot33 <- ggplot(data, aes(x=as.factor(wall_area ), y=cooling_load)) + geom_violin(trim=FALSE, color = "yellow") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "wall area ", y = "cooling load")
+plot44 <- ggplot(data, aes(x=as.factor(roof_area), y=cooling_load)) + geom_violin(trim=FALSE, color = "green") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "roof area", y = "cooling load")
+plot55 <- ggplot(data, aes(x=as.factor(overall_height), y=cooling_load)) + geom_violin(trim=FALSE, color = "blue") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "overall height", y = "cooling load")
+plot66 <- ggplot(data, aes(x=as.factor(orientation), y=cooling_load)) + geom_violin(trim=FALSE, color = "pink") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "orientation", y = "cooling_load")
+plot77 <- ggplot(data, aes(x=as.factor(glazing_area), y=cooling_load)) + geom_violin(trim=FALSE, color = "violet") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "glazing area", y = "cooling load")
+plot88 <- ggplot(data, aes(x=as.factor(glazing_area_distribution), y=cooling_load)) + geom_violin(trim=FALSE, color = "black") + geom_boxplot(width=0.1) + theme(legend.position = "none", axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + labs(x = "glazing area distribution", y = "cooling load")
+grid.arrange(plot11, plot22, plot33, plot44, plot55, plot66, plot77, plot88, ncol=4) 
+
+#From the graphs we can observe that the heating load seems to follow a step function when analyzed against relative compactness and surface area. For relative compactness there seems to be a threshold (of around 0.74), that when surpassed, triggers the heating load to increase. For the surface area, we can infer that when a threshold of around 662 is surpassed, the heating load diminishes. 
+
+#On the other hand, when analyzing heating load against wall area we can observe a slightly positive trend, and when analyzing it against roof area we can evidence what resembles a negative quadratic function. However, none of these trends seem to be very strong so that we can draw conclusions, probably more values would need to be included to be able to do this. 
+
+#Overall height seems to have a great impact on the response variable. A higher height seems to be related with a high heating load. 
+
+#Finally, orientation, glazing area and glazing area distribution seem to have little or no effect on the heating load. 
+
+#The same conclusions can be applied to the cooling load. Overall it can be said that the underlying relationship between output and input variables does not seem to be linear. 
+
+```
+```{r}
+
+#We now do a correlation matrix to understand the relationship between the variables analyzed. For this analysis we only included the numerical variables
+
+cormat <- data1  %>% select(-glazing_area_distribution1, -glazing_area_distribution2, -glazing_area_distribution3, -glazing_area_distribution4, -glazing_area_distribution5, -orientation2, -orientation3, -orientation4, -orientation5) %>% cor() %>% as.data.frame %>% rownames_to_column("var1")
+tidycor <- cormat %>% pivot_longer(-1, names_to = "var2", values_to = "correlation")
+
+#We establish factor levels for var1 and var2 just so that the plot puts heating and cooling load at the end of the correlation matrix
+
+tidycor %>% mutate(var1 = fct_relevel(var1, 
+            "relative_compactness", "surface_area", "wall_area", 
+            "roof_area", "overall_height", "glazing_area", 
+            "heating_load", "cooling_load")) %>% mutate(var2 = fct_relevel(var2, 
+            "relative_compactness", "surface_area", "wall_area", 
+            "roof_area", "overall_height", "glazing_area", 
+            "heating_load", "cooling_load")) %>% ggplot(aes(var1, var2, fill=correlation)) + 
+  geom_tile() + 
+  scale_fill_gradient2(low="red", mid="white", high = "blue") +
+  geom_text(aes(label=round(correlation,2)),color = "black", size = 3)+ #overlays correlation values
+  theme(axis.text.x = element_text(angle = 90)) + #flips the x-axis labels
+  coord_fixed() +
+  labs(x = "variable 1", y = "variable 2")
+
+#We can draw several conclusions from the correlation matrix. 
+
+# First, the variables that seem to be highly positively correlated to heating and cooling load are overall height, relative compactness. On the other hand, roof area and surface are seem to be highly negatively correlated to them.
+
+#The correlation between cooling and heating load is of 98%, which supports our hypothesis obtained above that the distribution of the response variables seems to be practically identical. 
+
+#Finally, we write a csv with the cleaned data that can be used for the modeling part
+
+write.csv(data1,"Tidy file",row.names = FALSE) 
+```
+
+
+
+
+
