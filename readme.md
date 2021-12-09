@@ -30,6 +30,8 @@ Determine which building parameters have the most influence on heating/cooling l
 
 ### Project Website: <https://sharkman424.github.io/sds322_team4.github.io/>
 
+### Presentation Slide Deck: <https://docs.google.com/presentation/d/1e1vve4DwwtXTH6QNTEUljpEEZ7-hkQc9H8BThgS3pMo/edit?usp=sharing>
+
 # Information About The Data
 
 The dataset was generated from simulations run using the Ecotect software. The simulations used 12 different Ecotect building shapes under various parameter combinations to generate 768 buildings. The dataset has 8  features, which are the building parameters that we will use to predict the response variables, which are the heating and cooling loads of the buildings. These features include Relative Compactness, Surface Area, Wall Area, Roof Area, Overall Height, Orientation, Glazing Area, and Glazing Area Distribution.
