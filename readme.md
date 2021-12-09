@@ -1,8 +1,5 @@
 Modeling Energy Efficiency
 ================
-# Link to Website
-
-### Website: <https://sharkman424.github.io/sds322_team4.github.io/>
 
 # Group Members
 
@@ -27,11 +24,13 @@ visualization
 Train and test a predictive model for the dataset using a target
 variable and assess the performance of the model
 
-# Link to Data Set
+# Important Links 
 
 ### Data set: <https://archive.ics.uci.edu/ml/machine-learning-databases/00242/>
 
 ### Column Information: <https://archive.ics.uci.edu/ml/datasets/Energy+efficiency>
+
+### Website: <https://sharkman424.github.io/sds322_team4.github.io/>
 
 # Information About The Data
 
